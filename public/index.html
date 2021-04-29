@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Discover User-Agent Client-Hints</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body {
+        margin: 0;
+      }
+      header {
+        border: 3px solid black;
+        padding: 10px;
+        margin-bottom: 20px;
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>Discovering UACH</header>
+    <main>
+      <div>
+        <input id="arch" type="checkbox" value="Sec-CH-UA-Arch">
+        <label for="arch">Sec-CH-UA-Arch</label>
+      </div>
+        <div>
+        <input id="bitness" type="checkbox" value="Sec-CH-UA-Bitness">
+        <label for="bitness">Sec-CH-UA-Bitness</label>
+      </div>
+        <div>
+        <input id="mobile" type="checkbox" value="Sec-CH-UA-Mobile">
+        <label for="mobile">Sec-CH-UA-Mobile</label>
+      </div>
+        <div>
+        <input id="model" type="checkbox" value="Sec-CH-UA-Model">
+        <label for="model">Sec-CH-UA-Model</label>
+      </div>
+        <div>
+        <input id="platform" type="checkbox" value="Sec-CH-UA-Platform">
+        <label for="platform">Sec-CH-UA-Platform</label>
+      </div>
+        <div>
+        <input id="version" type="checkbox" value="Sec-CH-UA-Platform-Version">
+        <label for="version">Sec-CH-UA-Platform-Version</label>
+      </div>
+        <div>
+        <input id="ua" type="checkbox" value="Sec-CH-UA">
+        <label for="ua">Sec-CH-UA</label>
+      </div>
+        <div>
+        <input id="fullversion" type="checkbox" value="Sec-CH-UA-Full-Version">
+        <label for="fullversion">Sec-CH-UA-Full-Version</label>
+      </div>
+      <button id="reload">Reload</button>
+    </main>
+    <script>
+      (function checkInputOnPageLoad() {
+        const url = new URL(window.location.href)
+
+        for (const [key, value] of url.searchParams) {
+          const input = document.querySelector(`[value=${key}]`)
+
+          if (input) input.checked = true
+        }
+      })();
+
+      (function reloadPage() {
+        const reload = document.querySelector('#reload')
+
+        reload.addEventListener('click', () => {
+          const inputs = document.querySelectorAll('input:checked')
+          const url = new URL('https://localhost')
+
+          inputs.forEach((input) => {
+            url.searchParams.set(input.value, '1')
+          })
+
+          console.log(url.toString())
+
+          window.location.assign(url.toString())
+        })
+      })()
+    </script>
+  </body>
+</html>
