@@ -8,53 +8,81 @@
     <style>
       body {
         margin: 0;
+        font-size: 16px;
+        font-family: sans-serif;
       }
       header {
         border: 3px solid black;
         padding: 10px;
-        margin-bottom: 20px;
-        font-weight: bold;
-        font-size: 20px;
+        margin: 5px 5px 20px;
         text-align: center;
+      }
+      h1 {
+        font-size: 20px;
+      }
+      main {
+        margin: 20px;
+      }
+      button {
+        margin-top: 10px;
+        padding: 20px;
+        cursor: pointer;
+      }
+      label {
+        display: block;
+        padding: 5px 10px 10px;
+        cursor: pointer;
+      }
+      label:hover {
+        background-color: #eee;
       }
     </style>
   </head>
   <body>
-    <header>Discovering UACH</header>
+    <header>
+      <h1>Discovering UACH</h1>
+      <p>Response headers are based on this page:</p>
+      <p>
+        <a href="https://github.com/WICG/ua-client-hints/blob/main/README.md" target="_blank">
+          https://github.com/WICG/ua-client-hints/blob/main/README.md
+        </a>
+      </p>
+    </header>
     <main>
-      <div>
+      <p>Add response headers:
+      <label for="arch">
         <input id="arch" type="checkbox" value="Sec-CH-UA-Arch">
-        <label for="arch">Sec-CH-UA-Arch</label>
-      </div>
-        <div>
+        <span>Sec-CH-UA-Arch</span>
+      </label>
+      <label for="bitness">
         <input id="bitness" type="checkbox" value="Sec-CH-UA-Bitness">
-        <label for="bitness">Sec-CH-UA-Bitness</label>
-      </div>
-        <div>
+        <span>Sec-CH-UA-Bitness</span>
+      </label>
+      <label for="mobile">
         <input id="mobile" type="checkbox" value="Sec-CH-UA-Mobile">
-        <label for="mobile">Sec-CH-UA-Mobile</label>
-      </div>
-        <div>
+        <span>Sec-CH-UA-Mobile</span>
+      </label>
+        <label for="model">
         <input id="model" type="checkbox" value="Sec-CH-UA-Model">
-        <label for="model">Sec-CH-UA-Model</label>
-      </div>
-        <div>
+        <span>Sec-CH-UA-Model</span>
+      </label>
+      <label for="platform">
         <input id="platform" type="checkbox" value="Sec-CH-UA-Platform">
-        <label for="platform">Sec-CH-UA-Platform</label>
-      </div>
-        <div>
+        <span>Sec-CH-UA-Platform</span>
+      </label>
+      <label for="version">
         <input id="version" type="checkbox" value="Sec-CH-UA-Platform-Version">
-        <label for="version">Sec-CH-UA-Platform-Version</label>
-      </div>
-        <div>
+        <span>Sec-CH-UA-Platform-Version</span>
+      </label>
+      <label for="ua">
         <input id="ua" type="checkbox" value="Sec-CH-UA">
-        <label for="ua">Sec-CH-UA</label>
-      </div>
-        <div>
+        <span>Sec-CH-UA</span>
+      </label>
+      <label for="fullversion">
         <input id="fullversion" type="checkbox" value="Sec-CH-UA-Full-Version">
-        <label for="fullversion">Sec-CH-UA-Full-Version</label>
-      </div>
-      <button id="reload">Reload</button>
+        <span>Sec-CH-UA-Full-Version</span>
+      </label>
+      <button id="reload">Reload with checked headers</button>
     </main>
     <script>
       (function checkInputOnPageLoad() {
@@ -72,7 +100,7 @@
 
         reload.addEventListener('click', () => {
           const inputs = document.querySelectorAll('input:checked')
-          const url = new URL('https://localhost')
+          const url = new URL(window.location.origin)
 
           inputs.forEach((input) => {
             url.searchParams.set(input.value, '1')
